@@ -21,17 +21,10 @@
     "watch": "watchify src/main.js -v -d -o build/webvr-manager.js",
     "test": "browserify test/device-info-test.js  > build/device-info-test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/borismus/webvr-boilerplate.git"
-  },
   "keywords": [
     "vr"
   ],
-  "author": "Boris Smus",
+  "author": "Jake Wood",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/borismus/webvr-boilerplate/issues"
-  },
-  "homepage": "https://github.com/borismus/webvr-boilerplate#readme"
+  "homepage": "http://jzwood.neocities.org/"
 }
