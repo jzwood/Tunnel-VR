@@ -73,9 +73,9 @@ function setupPerson(cam, floorplans, mazedim){
     }
   }
 
-  addEventListener("keypress", function(event){
+  window.addEventListener("keypress", function(event){
     //console.log(event.keyCode);
-    if(event.keyCode === 113 && !isMoving)
+    if((event.keyCode === 113 || event.key === 'q') && !isMoving)
       moveForward();
 
   });

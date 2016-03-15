@@ -2,7 +2,7 @@ window.onload = function(){
   //important global vars
   var renderer, scene, camera, loader, effect;
   var controls, clock, lastRender, manager;
-  var floorPlans, player, light, flashlight;
+  var floorPlans, player, light, lantern;
   var scaleHeight = 0.99, mazeDimensions = 7;
 
   var person;
@@ -43,7 +43,7 @@ window.onload = function(){
     // effect = new THREE.VREffect(renderer);
     effect = new THREE.StereoEffect(renderer);
     effect.eyeSeparation = 0.05;
-    effect.focalLength = 0.05;
+    effect.focalLength = 0.5;
     effect.setSize(window.innerWidth, window.innerHeight);
 
     loader = new THREE.TextureLoader();
@@ -61,20 +61,21 @@ window.onload = function(){
       //light = new THREE.AmbientLight( 0xffffff );
       //scene.add(light);
 
-      flashlight = new THREE.SpotLight(0xffffff, 1, 2, Math.PI/3, 1);
+      lantern = new THREE.SpotLight(0xffffff, 1, 2, Math.PI/3, 1);
 
-      flashlight.position.set(0,0,0.1);
-      flashlight.target = camera;
-      flashlight.castShadow = true;
-      flashlight.shadowDarkness = 0.5;
-      flashlight.shadowMapWidth = 1024;
-      flashlight.shadowMapHeight = 1024;
+      lantern.position.set(0,0,0.1);
+      lantern.target = camera;
+      lantern.castShadow = true;
+      lantern.shadowDarkness = 0.5;
+      lantern.shadowMapWidth = 1024;
+      lantern.shadowMapHeight = 1024;
 
-      flashlight.shadowCameraNear = 750;
-      flashlight.shadowCameraFar = 4000;
-      flashlight.shadowCameraFov = 30;
+      lantern.shadowCameraNear = 750;
+      lantern.shadowCameraFar = 4000;
+      lantern.shadowCameraFov = 30;
 
-      camera.add(flashlight);
+      camera.add(lantern);
+
     }();
 
     var initWalls = function(){
