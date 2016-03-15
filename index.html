@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset=utf-8>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<link rel="manifest" href="/manifest.json">
 	<title>Lost and Alone</title>
 	<style>
 	body { margin: 0; background: black;}
@@ -53,15 +58,16 @@
 	<!-- VRControls.js acquires positional information from connected VR devices and applies the transformations to a three.js camera object. -->
 	<script src="node_modules/three/examples/js/controls/VRControls.js"></script>
 	<!-- VREffect.js handles stereo camera setup and rendering. -->
-	<script src="node_modules/three/examples/js/effects/VREffect.js"></script>
+	<!-- <script src="node_modules/three/examples/js/effects/VREffect.js"></script> -->
+	<script src="node_modules/three/examples/js/effects/StereoEffect.js"></script>
 	<!-- A polyfill for WebVR using the Device{Motion,Orientation}Event API. -->
 	<script src="node_modules/webvr-polyfill/build/webvr-polyfill.js"></script>
 	<!-- Helps enter and exit VR mode, provides best practices while in VR.  -->
 	<script src="build/webvr-manager.js"></script>
 
-	<script src="alone_assets/libs/FirstPersonView.js"></script>
+	<!-- <script src="alone_assets/libs/FirstPersonView.js"></script>
 	<script src="alone_assets/libs/DeviceOrientationControls.js"></script>
-	<script src="alone_assets/libs/StereoEffect.js"></script>
+	<script src="alone_assets/libs/StereoEffect.js"></script> -->
 	<script src="alone_assets/app/floorplan.js"></script>
 	<script src="alone_assets/app/floorplanRender.js"></script>
 	<script src="alone_assets/app/player.js"></script>

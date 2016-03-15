@@ -36,7 +36,7 @@ function makeWall(x,y,z,r,loader,scene){
   var geo = new THREE.BoxGeometry( WALLWIDTH, WALLDEPTH, WALLHEIGHT );
   // load a resource
   if(!simpleGraphics){
-    loader.load('assets/images/concrete2.jpg', function ( tex ) {
+    loader.load('alone_assets/images/concrete2.jpg', function ( tex ) {
         // var texture = new THREE.TextureLoader().load( 'assets/images/' );
         var mat = new THREE.MeshPhongMaterial({ map: tex }),
             cube = new THREE.Mesh(geo,mat);
@@ -76,7 +76,7 @@ function drawCeiling(x, y, z, dims, loader, scene){
   var geo = new THREE.BoxGeometry( WALLWIDTH, WALLDEPTH, WALLHEIGHT );
   // load a resource
   if(!simpleGraphics){
-    loader.load('assets/images/concrete2.jpg', function ( tex ) {
+    loader.load('alone_assets/images/concrete2.jpg', function ( tex ) {
         // var texture = new THREE.TextureLoader().load( 'assets/images/' );
         var mat = new THREE.MeshPhongMaterial({ map: tex }),
             cube = new THREE.Mesh(geo,mat);

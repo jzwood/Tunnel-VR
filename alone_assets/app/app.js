@@ -1,106 +1,108 @@
 window.onload = function(){
   //important global vars
-  var scene, camera, loader, renderer, effect;
-  var isMobile, controls, clock;
-  var floorPlans, player, light, spotLight;
+  var renderer, scene, camera, loader, effect;
+  var controls, clock, lastRender, manager;
+  var floorPlans, player, light, flashlight;
   var scaleHeight = 0.99, mazeDimensions = 7;
 
   var person;
 
   function init(){ //thoughtful comment here
-    isMobile = typeof window.orientation !== 'undefined';//using mobile device?
+    // isMobile = typeof window.orientation !== 'undefined';//using mobile device?
+    //renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ antialias: true});
+
+    var initRender = function(){
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      //renderer.setSize( window.innerWidth, window.innerHeight*scaleHeight );
+      renderer.setPixelRatio( window.devicePixelRatio );
+    }();
+
+    document.body.appendChild( renderer.domElement );
+
     scene = new THREE.Scene();
+
+
     var aspect = window.innerWidth / window.innerHeight,
         fov = 100,
         near = 0.05,
         far = 10;
+
     camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
-    scene.add( camera );//necessary for spotlight to follow camera
-    // instantiate a loader
+    scene.add( camera );//necessary for spotlight to follow camera instantiate a loader
+
+    // Apply VR headset positional data to camera.
+    controls = new THREE.VRControls(camera);
+    // controls.lookSpeed = 0.1;
+    // controls.movementSpeed = 0.5;
+    // controls.constrainVertical = true;
+
+
+    // Apply VR stereo rendering to renderer.
+    // effect = new THREE.VREffect(renderer);
+    effect = new THREE.StereoEffect(renderer);
+    effect.eyeSeparation = 0.05;
+    effect.focalLength = 0.05;
+    effect.setSize(window.innerWidth, window.innerHeight);
+
     loader = new THREE.TextureLoader();
 
-    //renderer = new THREE.WebGLRenderer();
-    renderer = new THREE.WebGLRenderer({ antialias: true});
+    // Create a VR manager helper to enter and exit VR mode.
+    var params = {
+      hideButton: false, // Default: false.
+      isUndistorted: false // Default: false.
+    };
+    manager = new WebVRManager(renderer, effect, params);
 
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.setSize( window.innerWidth, window.innerHeight*scaleHeight );
-    renderer.setPixelRatio( window.devicePixelRatio );
-    window.addEventListener( 'resize', onWindowResize, false );
-    document.body.appendChild( renderer.domElement );
+    var initLights = function(){
 
-    if(isMobile){
-      //mobile controls
-      controls = new THREE.DeviceOrientationControls( camera );
+      light = new THREE.AmbientLight( 0x7F7F7F ); // debugging light. turn off for real
+      //light = new THREE.AmbientLight( 0xffffff );
+      //scene.add(light);
 
-      effect = new THREE.StereoEffect(renderer);
-      effect.eyeSeparation = 0.05;
-      effect.setSize( window.innerWidth, window.innerHeight );
+      flashlight = new THREE.SpotLight(0xffffff, 1, 2, Math.PI/3, 1);
 
-    }else{
-      //desktop controls
-      clock  = new THREE.Clock();
-      controls = new THREE.FirstPersonControls(camera);
-      controls.lookSpeed = 0.1;
-      controls.movementSpeed = 0.5;
-      controls.constrainVertical = true;
-    }
+      flashlight.position.set(0,0,0.1);
+      flashlight.target = camera;
+      flashlight.castShadow = true;
+      flashlight.shadowDarkness = 0.5;
+      flashlight.shadowMapWidth = 1024;
+      flashlight.shadowMapHeight = 1024;
 
-    light = new THREE.AmbientLight( 0x7F7F7F ); // debugging light. turn off for real
-    //light = new THREE.AmbientLight( 0xffffff );
-    //scene.add(light);
+      flashlight.shadowCameraNear = 750;
+      flashlight.shadowCameraFar = 4000;
+      flashlight.shadowCameraFov = 30;
 
-    var flashlight = new THREE.SpotLight(0xffffff, 1, 2, Math.PI/3, 1);
+      camera.add(flashlight);
+    }();
 
-    flashlight.position.set(0,0,0.1);
-    flashlight.target = camera;
-    flashlight.castShadow = true;
-    flashlight.shadowDarkness = 0.5;
-    flashlight.shadowMapWidth = 1024;
-    flashlight.shadowMapHeight = 1024;
-
-    flashlight.shadowCameraNear = 750;
-    flashlight.shadowCameraFar = 4000;
-    flashlight.shadowCameraFov = 30;
-
-    camera.add(flashlight);
-
-    floorPlans = [];
-    groundFloor(mazeDimensions, loader, scene);
-    floorPlans.push(drawFloor(0, mazeDimensions, loader, scene), drawFloor(1, mazeDimensions, loader, scene));
-    window.fp = floorPlans;
+    var initWalls = function(){
+      floorPlans = [];
+      groundFloor(mazeDimensions, loader, scene);
+      floorPlans.push(drawFloor(0, mazeDimensions, loader, scene), drawFloor(1, mazeDimensions, loader, scene));
+      window.fp = floorPlans;
+    }();
 
     setupPerson(camera, floorPlans, mazeDimensions);
 
-    var onWindowResize = function(){
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        if(isMobile)
-          effect.setSize( window.innerWidth, window.innerHeight );
-        else
-          renderer.setSize( window.innerWidth, window.innerHeight*scaleHeight );
-      }
-
-    window.addEventListener("resize", onWindowResize, false);
+    lastRender = 0;
   }
 
-  function render() {
-    requestAnimationFrame(render);
-    if(isMobile){
-      controls.update();
-    }else{
-      var delta = clock.getDelta();
-      controls.update(delta);
-    }
-    if(isMobile){
-      effect.render( scene, camera );
-    }else{
-      renderer.render( scene, camera );
-    }
+  function animate(timestamp) {
+    var delta = Math.min(timestamp - lastRender, 500);
+    lastRender = timestamp;
+
+    // Update VR headset position and apply to camera.
+    controls.update();
+
+    // Render the scene through the manager.
+    manager.render(scene, camera, timestamp);
+
+    requestAnimationFrame(animate);
   }
 
   init();
-
-  render();
+  animate(performance ? performance.now() : Date.now());
 
 }
