@@ -27,7 +27,7 @@ window.onload = function(){
     var aspect = window.innerWidth / window.innerHeight,
         fov = 100,
         near = 0.05,
-        far = 10;
+        far = 2000;
 
     camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
     scene.add( camera );//necessary for spotlight to follow camera instantiate a loader
@@ -56,11 +56,6 @@ window.onload = function(){
     manager = new WebVRManager(renderer, effect, params);
 
     var initLights = function(){
-
-      light = new THREE.AmbientLight( 0x7F7F7F ); // debugging light. turn off for real
-      //light = new THREE.AmbientLight( 0xffffff );
-      light.position.y = 10;
-      scene.add(light);
 
       lantern = new THREE.SpotLight(0xffffff, 1, 2, Math.PI/3, 1);
 
@@ -109,6 +104,7 @@ window.onload = function(){
     //   startIndexZ++;
     // faceMesh.position.set(startIndexX, 0, startIndexZ);
     // faceMesh.material.transparent = true;
+    // endGame();
 
     lastRender = 0;
     this.fm = faceMesh;

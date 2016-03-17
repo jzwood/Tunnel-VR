@@ -1,8 +1,10 @@
 function returnSkyBox(fp, dims){
 
+    var endVersion = 3;
+
     var loadr = new THREE.CubeTextureLoader();
     window.ldr = loadr;
-    var dir = 'alone_assets/images/sky/';
+    var dir = 'alone_assets/images/sky' + endVersion + '/';
 
     var cubemap = loadr.load( [
       dir+'0004.png', dir+'0002.png',
@@ -26,9 +28,11 @@ function returnSkyBox(fp, dims){
 
     // create skybox mesh
     var skybox = new THREE.Mesh(
-      new THREE.CubeGeometry(100, 100, 100),
+      new THREE.CubeGeometry(1000, 1000, 1000),
       skyBoxMaterial
     );
+
+    skybox.isSky = true;
 
     window.sb = skybox;
 

@@ -7,7 +7,6 @@ function setupPerson(cam, floorplans, mazedim){
       pz = 3;
   var isMoving = false;
 
-
   window.playcam = cam;
   window.fpg = floorplans;
 
@@ -25,7 +24,7 @@ function setupPerson(cam, floorplans, mazedim){
 
   var move = function(vecDir, distance){
 
-    cam.position.round ();
+    cam.position.round();
 
     var level = floorplans[cam.position.y],
         currCell = level[cam.position.x + vecDir.x][cam.position.z + vecDir.z],
@@ -37,19 +36,25 @@ function setupPerson(cam, floorplans, mazedim){
       return vecDir.y === -1 && belowForwardVal === 2;
     }
 
+    var endGame = function(){
+      var escape = cam.position.y === 1 && currCell === 2 && vecDir.y === 1;
+      if(escape) gameOver = true;
+      return escape;
+    }
+
     console.log(vecDir);
     if(forwCell != 1 && (vecDir.y === 0 || (vecDir.y === 1 && currCell === 2)) || moveDown()){
 
-      isMoving = true;
+      isMoving = !endGame();
       var counter = 0;
 
       var movement = setInterval(function(){
-        var travelDist = 1, step = 100
+        var travelDist = endGame() ? 4 : 1, step = 100;
         if(counter >= step){
           isMoving = false;
           clearInterval(movement);
         }else{
-          cam.position.addScaledVector(vecDir,travelDist/step);
+          cam.position.addScaledVector(vecDir.multiplyScalar(travelDist),travelDist/step);
           counter ++ ;
         }
       }, 15);
