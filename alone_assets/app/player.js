@@ -10,7 +10,6 @@ function setupPerson(cam, floorplans, mazedim){
 
   window.playcam = cam;
   window.fpg = floorplans;
-  //cam.lookAt(new THREE.Vector3(0,0,0));
 
 
   var getStartPos = function(){ //finds a floor tile (x,y) guaranteed to not be inside a wall
@@ -32,7 +31,14 @@ function setupPerson(cam, floorplans, mazedim){
         currCell = level[cam.position.x + vecDir.x][cam.position.z + vecDir.z],
         forwCell = level[cam.position.x + vecDir.x][cam.position.z + vecDir.z];
 
-    if((forwCell != 1) && (vecDir.y === 0 || (vecDir.y === 1 && currCell === 2))){
+    var moveDown = function(){
+      if (cam.position.y < 1) return false;
+      var belowForwardVal = floorplans[cam.position.y-1][cam.position.x + vecDir.x][cam.position.z + vecDir.z];
+      return vecDir.y === -1 && belowForwardVal === 2;
+    }
+
+    console.log(vecDir);
+    if(forwCell != 1 && (vecDir.y === 0 || (vecDir.y === 1 && currCell === 2)) || moveDown()){
 
       isMoving = true;
       var counter = 0;

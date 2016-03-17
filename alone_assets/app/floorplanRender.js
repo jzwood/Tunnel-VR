@@ -2,7 +2,7 @@
 /* BELOW USES THREE.JS TO DRAW MAZE BY FLOOR */
 //////////////////////////////////////////////
 
-var simpleGraphics = true;
+var simpleGraphics = false;
 
 //uses
 function drawFloor(elevation, dims, loader, scene){
