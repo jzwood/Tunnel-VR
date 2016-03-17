@@ -2,10 +2,7 @@
 
 function setupPerson(cam, floorplans, mazedim){
 
-  var px = 1,
-      py = 0,
-      pz = 3;
-  var isMoving = false;
+  var isMoving = false, gameOver = false;
 
   window.playcam = cam;
   window.fpg = floorplans;
@@ -27,8 +24,7 @@ function setupPerson(cam, floorplans, mazedim){
     cam.position.round();
 
     var level = floorplans[cam.position.y],
-        currCell = level[cam.position.x + vecDir.x][cam.position.z + vecDir.z],
-        forwCell = level[cam.position.x + vecDir.x][cam.position.z + vecDir.z];
+        currCell = level[cam.position.x + vecDir.x][cam.position.z + vecDir.z];
 
     var moveDown = function(){
       if (cam.position.y < 1) return false;
@@ -38,27 +34,30 @@ function setupPerson(cam, floorplans, mazedim){
 
     var endGame = function(){
       var escape = cam.position.y === 1 && currCell === 2 && vecDir.y === 1;
-      if(escape) gameOver = true;
+      if(escape){
+        gameOver = true;
+      }
       return escape;
     }
 
-    console.log(vecDir);
-    if(forwCell != 1 && (vecDir.y === 0 || (vecDir.y === 1 && currCell === 2)) || moveDown()){
+    if(currCell != 1 && (vecDir.y === 0 || (vecDir.y === 1 && currCell === 2)) || moveDown()){
 
-      isMoving = !endGame();
+      isMoving = true;
       var counter = 0;
+      var travelDist = endGame() ? 4 : 1, step = 100;
 
       var movement = setInterval(function(){
-        var travelDist = endGame() ? 4 : 1, step = 100;
         if(counter >= step){
           isMoving = false;
           clearInterval(movement);
         }else{
-          cam.position.addScaledVector(vecDir.multiplyScalar(travelDist),travelDist/step);
+          cam.position.addScaledVector(vecDir,travelDist/step);
           counter ++ ;
         }
       }, 15);
     }
+
+    // isMoving = !endGame();
 
   }
 
@@ -86,9 +85,9 @@ function setupPerson(cam, floorplans, mazedim){
 
   window.addEventListener("keypress", function(event){
     //console.log(event.keyCode);
-    if((event.keyCode === 113 || event.key === 'q') && !isMoving)
+    if((event.keyCode === 113 || event.key === 'q') && !isMoving && !gameOver){
       moveForward();
-
+    }
   });
 
 }

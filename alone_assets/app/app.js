@@ -3,7 +3,7 @@ window.onload = function(){
   var renderer, scene, camera, loader, effect;
   var controls, clock, lastRender, manager;
   var floorPlans, player, light, lantern, faceMesh;
-  var scaleHeight = 0.99, mazeDimensions = 5;
+  var scaleHeight = 0.99, mazeDimensions = 7;
 
   var person;
 
