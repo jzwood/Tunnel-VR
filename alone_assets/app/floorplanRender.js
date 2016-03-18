@@ -25,17 +25,20 @@ function drawFloor(elevation, dims, loader, scene){
       if (floorPlans[i][j] === 1)
         makeWall(i,elevation,j,rot,loader,scene);
       else if(floorPlans[i][j] === 0)
-        drawCeiling(i,elevation,j, dims,loader, scene);
+        drawCeiling(i,elevation,j,loader, scene);
+        drawBlood(i,elevation,j,0.2,loader, scene);
     }
   }
   return floorPlans;
 }
 
-function groundFloor(dims, loader, scene, renderer){
+function groundFloor(dims, floor, loader, scene, renderer){
   for(var i=0; i<dims; i++){
     for(var j=0; j<dims; j++){
-      drawCeiling(i,-1,j, dims,loader, scene);
-      drawBlood(i,-1,j, dims, renderer, scene);
+      if(floor[i][j] != 1){
+        drawCeiling(i,-1,j,loader, scene);
+        drawBlood(i,0,j,0.2,renderer, scene);
+      }
     }
   }
 }
@@ -77,12 +80,31 @@ function makeWall(x,y,z,r,loader,scene){
     }
   }
 
-function drawBlood(x,y,z,r,renderer,scene){
-//
+function drawBlood(x,y,z,prob,renderer,scene){
+  /***************/
+  if(Math.random() < prob){
+    var index = Math.floor(Math.random()*6+1);
+    var blood = THREE.ImageUtils.loadTexture('alone_assets/images/blood/b' + index + '.png', {}, function() {
+      renderer.render(scene);
+    }),
+
+    bMat = new THREE.MeshPhongMaterial({map: blood}),
+    // material = new THREE.MeshPhongMaterial({color: 0xCC0000});
+    bGeo = new THREE.PlaneGeometry(1, 1);
+
+    var bMesh = new THREE.Mesh(bGeo, bMat);
+
+    scene.add(bMesh);
+
+    bMesh.position.set(x, y-0.494, z);
+    bMesh.rotation.x -= Math.PI/2;
+    bMesh.material.transparent = true;
+  }
+  /*******************/
 }
 
 //draws the floor tile for a given position
-function drawCeiling(x, y, z, dims, loader, scene){
+function drawCeiling(x, y, z, loader, scene){
   var WALLWIDTH = 1,
       WALLHEIGHT= 1,
       WALLDEPTH = 0.01;

@@ -3,7 +3,7 @@ window.onload = function(){
   var renderer, scene, camera, loader, effect;
   var controls, clock, lastRender, manager;
   var floorPlans, player, light, lantern;
-  var scaleHeight = 0.99, mazeDimensions = 5;
+  var scaleHeight = 0.99, mazeDimensions = 7;
 
   var person;
 
@@ -76,31 +76,13 @@ window.onload = function(){
 
     var initWalls = function(){
       floorPlans = [];
-      groundFloor(mazeDimensions, loader, scene, renderer);
       floorPlans.push(drawFloor(0, mazeDimensions, loader, scene), drawFloor(1, mazeDimensions, loader, scene));
+      groundFloor(mazeDimensions, floorPlans[0], loader, scene, renderer);
       window.fp = floorPlans;
     }();
 
     setupPerson(camera, floorPlans, mazeDimensions);
-    /***************/
-    var blood = THREE.ImageUtils.loadTexture('alone_assets/images/b1.png', {}, function() {
-      renderer.render(scene);
-    }),
 
-    bMat = new THREE.MeshPhongMaterial({map: blood}),
-    // material = new THREE.MeshPhongMaterial({color: 0xCC0000});
-    bGeo = new THREE.PlaneGeometry(1, 1);
-
-    var bMesh = new THREE.Mesh(bGeo, bMat);
-
-    scene.add(bMesh);
-
-    bMesh.position.set(camera.position.x, -0.494, camera.position.z);
-    bMesh.rotation.x -= Math.PI/2;
-    bMesh.material.transparent = true;
-
-    window.bm = bMesh;
-    /*******************/
 
     scene.add(returnSkyBox(floorPlans, mazeDimensions));
 
