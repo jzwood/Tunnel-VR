@@ -16,7 +16,7 @@ function setupPerson(cam, floorplans, mazedim){
     var startIndexZ = getIndex();
     if(startIndexZ%2 === 0)
       startIndexZ++;
-    cam.position.set(startIndexX, 0, startIndexZ);
+    cam.position.set(startIndexX, 1, startIndexZ);
   }();
 
   var move = function(vecDir, distance){

@@ -1,6 +1,12 @@
 function returnSkyBox(fp, dims){
 
-    var endVersion = 3;
+    var endVersion = function(){
+      if(querystring.search(/ending=[1-4]/) > -1){
+        return querystring.match(/[1-4]/)[0];
+      }else{
+        return 2;
+      }
+    }();
 
     var loadr = new THREE.CubeTextureLoader();
     window.ldr = loadr;
