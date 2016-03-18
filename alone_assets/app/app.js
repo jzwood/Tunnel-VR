@@ -77,7 +77,7 @@ window.onload = function(){
     var initWalls = function(){
       floorPlans = [];
       floorPlans.push(drawFloor(0, mazeDimensions, loader, scene), drawFloor(1, mazeDimensions, loader, scene));
-      groundFloor(mazeDimensions, floorPlans[0], loader, scene, renderer);
+      groundFloor(mazeDimensions, floorPlans[0], loader, scene);
       window.fp = floorPlans;
     }();
 

@@ -32,12 +32,12 @@ function drawFloor(elevation, dims, loader, scene){
   return floorPlans;
 }
 
-function groundFloor(dims, floor, loader, scene, renderer){
+function groundFloor(dims, floor, loader, scene){
   for(var i=0; i<dims; i++){
     for(var j=0; j<dims; j++){
       if(floor[i][j] != 1){
         drawCeiling(i,-1,j,loader, scene);
-        drawBlood(i,0,j,0.2,renderer, scene);
+        drawBlood(i,0,j,0.2, loader, scene);
       }
     }
   }
@@ -80,25 +80,36 @@ function makeWall(x,y,z,r,loader,scene){
     }
   }
 
-function drawBlood(x,y,z,prob,renderer,scene){
+function drawBlood(x,y,z,prob, iLoader, scene){
   /***************/
   if(Math.random() < prob){
-    var index = Math.floor(Math.random()*6+1);
-    var blood = THREE.ImageUtils.loadTexture('alone_assets/images/blood/b' + index + '.png', {}, function() {
-      renderer.render(scene);
-    }),
 
-    bMat = new THREE.MeshPhongMaterial({map: blood}),
-    // material = new THREE.MeshPhongMaterial({color: 0xCC0000});
-    bGeo = new THREE.PlaneGeometry(1, 1);
+    // load a image resource
+    iLoader.load('alone_assets/images/blood/b' + Math.floor(Math.random()*6+1) + '.png',
+    	// Function when resource is loaded
+    	function ( image ) {
 
-    var bMesh = new THREE.Mesh(bGeo, bMat);
+        var bMat = new THREE.MeshPhongMaterial({map: image}),
+        bGeo = new THREE.PlaneGeometry(1, 1);
 
-    scene.add(bMesh);
+        var bMesh = new THREE.Mesh(bGeo, bMat);
 
-    bMesh.position.set(x, y-0.494, z);
-    bMesh.rotation.x -= Math.PI/2;
-    bMesh.material.transparent = true;
+        bMesh.position.set(x, y-0.494, z);
+        bMesh.rotation.x -= Math.PI/2;
+        bMesh.material.transparent = true;
+
+        scene.add( bMesh );
+    	},
+    	// Function called when download progresses
+    	function ( xhr ) {
+    		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+    	},
+    	// Function called when download errors
+    	function ( xhr ) {
+    		console.log( 'An error happened' );
+    	}
+    );
+
   }
   /*******************/
 }
