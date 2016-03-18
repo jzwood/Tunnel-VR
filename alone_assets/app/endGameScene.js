@@ -10,7 +10,7 @@ function returnSkyBox(fp, dims){
 
     var loadr = new THREE.CubeTextureLoader();
     window.ldr = loadr;
-    var dir = 'alone_assets/images/sky' + endVersion + '/';
+    var dir = 'alone_assets/images/skybox/sky' + endVersion + '/';
 
     var cubemap = loadr.load( [
       dir+'0004.png', dir+'0002.png',
