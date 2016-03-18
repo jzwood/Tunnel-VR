@@ -2,7 +2,7 @@ window.onload = function(){
   //important global vars
   var renderer, scene, camera, loader, effect;
   var controls, clock, lastRender, manager;
-  var floorPlans, player, light, lantern, faceMesh;
+  var floorPlans, player, light, lantern;
   var scaleHeight = 0.99, mazeDimensions = 5;
 
   var person;
@@ -76,38 +76,35 @@ window.onload = function(){
 
     var initWalls = function(){
       floorPlans = [];
-      groundFloor(mazeDimensions, loader, scene);
+      groundFloor(mazeDimensions, loader, scene, renderer);
       floorPlans.push(drawFloor(0, mazeDimensions, loader, scene), drawFloor(1, mazeDimensions, loader, scene));
       window.fp = floorPlans;
     }();
 
     setupPerson(camera, floorPlans, mazeDimensions);
+    /***************/
+    var blood = THREE.ImageUtils.loadTexture('alone_assets/images/b1.png', {}, function() {
+      renderer.render(scene);
+    }),
+
+    bMat = new THREE.MeshPhongMaterial({map: blood}),
+    // material = new THREE.MeshPhongMaterial({color: 0xCC0000});
+    bGeo = new THREE.PlaneGeometry(1, 1);
+
+    var bMesh = new THREE.Mesh(bGeo, bMat);
+
+    scene.add(bMesh);
+
+    bMesh.position.set(camera.position.x, -0.494, camera.position.z);
+    bMesh.rotation.x -= Math.PI/2;
+    bMesh.material.transparent = true;
+
+    window.bm = bMesh;
+    /*******************/
 
     scene.add(returnSkyBox(floorPlans, mazeDimensions));
-    // var theFace = THREE.ImageUtils.loadTexture('alone_assets/images/black.png', {}, function() {
-    //   renderer.render(scene);
-    // }),
-    // faceMat = new THREE.MeshBasicMaterial({map: theFace}),
-    // // material = new THREE.MeshPhongMaterial({color: 0xCC0000});
-    // faceGeo = new THREE.PlaneGeometry(1, 1);
-    //
-    // faceMesh = new THREE.Mesh(faceGeo, faceMat);
-    //
-    // scene.add(faceMesh);
-
-    // var getIndex = function(){ return Math.floor(Math.random()*(mazeDimensions-1));}
-    // var startIndexX = getIndex();
-    // if(startIndexX%2 === 0)
-    //   startIndexX++;
-    // var startIndexZ = getIndex();
-    // if(startIndexZ%2 === 0)
-    //   startIndexZ++;
-    // faceMesh.position.set(startIndexX, 0, startIndexZ);
-    // faceMesh.material.transparent = true;
-    // endGame();
 
     lastRender = 0;
-    this.fm = faceMesh;
   }
 
   function animate(timestamp) {

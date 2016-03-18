@@ -31,10 +31,11 @@ function drawFloor(elevation, dims, loader, scene){
   return floorPlans;
 }
 
-function groundFloor(dims, loader, scene){
+function groundFloor(dims, loader, scene, renderer){
   for(var i=0; i<dims; i++){
     for(var j=0; j<dims; j++){
       drawCeiling(i,-1,j, dims,loader, scene);
+      drawBlood(i,-1,j, dims, renderer, scene);
     }
   }
 }
@@ -75,6 +76,10 @@ function makeWall(x,y,z,r,loader,scene){
       scene.add( cube );
     }
   }
+
+function drawBlood(x,y,z,r,renderer,scene){
+//
+}
 
 //draws the floor tile for a given position
 function drawCeiling(x, y, z, dims, loader, scene){

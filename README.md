@@ -1,16 +1,16 @@
 # Tunnel-Escape-VR
 
-Tunnel Escape is a simple immersive vr experience compatible with
-both Google Cardboard and Oculus Rift.
+Tunnel Escape is a simple immersive vr experience geared towards Oculus Rift
+but viewable with Google Cardboard and on desktop.
 
 # Instructions
 
-The objective is to reach the surface...alive.
+- The objective is to reach the surface...alive.
 
-There are only two sources of control in this game. Head orientation which will
+- There are only two sources of control in this game. Head orientation which will
 change camera orientation and forward movement.
 
-Pressing "q" will move camera forward only if there is not a wall in the way.
+- Pressing "q" will move camera forward only if there is not a wall in the way.
 
 # Options
 
