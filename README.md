@@ -1,7 +1,7 @@
 # Tunnel-Escape-VR
 
 [Tunnel Escape][thegame] is a simple immersive vr experience geared towards Oculus Rift
-but viewable with Google Cardboard and on desktop.
+but viewable on desktop and mobile.
 
 [![Bloody passage screenshot](img/screenshot_blood.png)][thegame]
 
@@ -14,7 +14,13 @@ but viewable with Google Cardboard and on desktop.
 - There are only two sources of control in this game. Head orientation which will
 change camera orientation and forward movement.
 
-- Pressing "q" will move camera forward only if there is not a wall in the way.
+- For desktop and Oculus, Pressing any key will move camera forward but
+only if there is not a wall blocking the way.
+
+- (Tapping the screen moves a player forward for mobile.)
+
+- Disclaimer: The stereo-vision has been optimized for Oculus Rift,
+ therefore, by default, this game will not view correctly on Google Cardboard.
 
 ## Options
 
@@ -43,10 +49,3 @@ put screen into Full/stereoscopic mode and enjoy.
 [ffn]: https://nightly.mozilla.org/
 [mp]: https://addons.mozilla.org/en-US/firefox/addon/mozilla-webvr-enabler/
 [osdk]: https://developer.oculus.com/downloads/
-
-## Google Cardboard
-
-- Without a bluetooth keyboard the experience is demo-able but not fully
-  available using Google Cardboard.
-- to Demo, simply navigate to url on phone and use with Cardboard. (If running locally
-  this can be done using localhost and ngrok.)
