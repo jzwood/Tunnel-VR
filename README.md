@@ -3,6 +3,9 @@
 Tunnel Escape is a simple immersive vr experience geared towards Oculus Rift
 but viewable with Google Cardboard and on desktop.
 
+[![Bloody passage screenshot](img/screenshot_blood.png)]
+[![looking up screenshot](img/screenshot_ceiling.png)]
+
 # Instructions
 
 - The objective is to reach the surface...alive.
