@@ -84,11 +84,14 @@ function setupPerson(cam, floorplans, mazedim){
     }
   }
 
-  window.addEventListener("keypress", function(event){
+  function handlePress(event){
     //console.log(event.keyCode);
-    if((event.keyCode === 113 || event.key === 'q') && !isMoving && !gameOver){
+    if(!isMoving && !gameOver){
       moveForward();
     }
-  });
+  }
+
+  window.addEventListener("keypress", handlePress, false);
+  window.addEventListener("touchstart", handlePress, false);
 
 }
