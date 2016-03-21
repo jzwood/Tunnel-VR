@@ -3,7 +3,7 @@
 Tunnel Escape is a simple immersive vr experience geared towards Oculus Rift
 but viewable with Google Cardboard and on desktop.
 
-[![Bloody passage screenshot](img/screenshot_blood.png)]
+![Bloody passage screenshot](img/screenshot_blood.png)
 
 # Instructions
 
@@ -14,7 +14,7 @@ change camera orientation and forward movement.
 
 - Pressing "q" will move camera forward only if there is not a wall in the way.
 
-# Options
+## Options
 
 - For simple graphics add simplegraphics=true to the querystring, e.g. localhost:8000/?simplegraphics=true
 - For a different end game scenario add 'ending=' plus one of 4 options, 1 through 4, to
