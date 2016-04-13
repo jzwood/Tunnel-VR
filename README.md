@@ -5,7 +5,7 @@ but viewable on desktop and mobile.
 
 [![Bloody passage screenshot](img/screenshot_blood.png)][thegame]
 
-[thegame]: http://jzwood.github.io/tunnel-vr-copy/
+[thegame]: http://jzwood.github.io/Tunnel-VR/
 
 # Instructions
 
