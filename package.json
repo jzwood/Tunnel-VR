@@ -14,7 +14,7 @@
   "devDependencies": {
     "browserify": "latest",
     "derequire": "latest",
-    "watchify": "latest"
+    "watchify": "latest",
   },
   "scripts": {
     "build": "browserify src/main.js | derequire > build/webvr-manager.js",
@@ -24,6 +24,7 @@
   "keywords": [
     "vr"
   ],
+	"repository": "https://github.com/jzwood/Tunnel-VR",
   "author": "Jake Wood",
   "license": "Apache-2.0",
   "homepage": "http://jzwood.neocities.org/"
