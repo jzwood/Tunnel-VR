@@ -14,7 +14,7 @@
   "devDependencies": {
     "browserify": "latest",
     "derequire": "latest",
-    "watchify": "latest",
+    "watchify": "latest"
   },
   "scripts": {
     "build": "browserify src/main.js | derequire > build/webvr-manager.js",
